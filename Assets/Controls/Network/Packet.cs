@@ -20,22 +20,22 @@ public class Packet
     private readonly byte[] m_data;
     private int Index = 0;
 
-    public int ReadInt() => BitConverter.ToInt32(m_data, Index += 4);
-    public long ReadLong() => BitConverter.ToInt64(m_data, Index += 8);
-    public short ReadShort() => BitConverter.ToInt16(m_data, Index += 2);
+    public int ReadInt() => BitConverter.ToInt32(m_data, (Index += 4) - 4);
+    public long ReadLong() => BitConverter.ToInt64(m_data, (Index += 8) - 8);
+    public short ReadShort() => BitConverter.ToInt16(m_data, (Index += 2) - 2);
     public sbyte ReadSignedByte() => unchecked((sbyte)m_data[Index++]);
-    public uint ReadUInt() => BitConverter.ToUInt32(m_data, Index += 4);
-    public ulong ReadULong() => BitConverter.ToUInt64(m_data, Index += 8);
-    public ushort ReadUShort() => BitConverter.ToUInt16(m_data, Index += 2);
-    public char ReadChar() => BitConverter.ToChar(m_data, Index += 2);
+    public uint ReadUInt() => BitConverter.ToUInt32(m_data, (Index += 4) - 4);
+    public ulong ReadULong() => BitConverter.ToUInt64(m_data, (Index += 8) - 8);
+    public ushort ReadUShort() => BitConverter.ToUInt16(m_data, (Index += 2) - 2);
+    public char ReadChar() => BitConverter.ToChar(m_data, (Index += 2) - 2);
     public byte ReadByte() => m_data[Index++];
-    public bool ReadBool() => BitConverter.ToBoolean(m_data, Index += 1);
-    public float ReadFloat() => BitConverter.ToSingle(m_data, Index += 4);
-    public double ReadDouble() => BitConverter.ToDouble(m_data, Index += 8);
+    public bool ReadBool() => BitConverter.ToBoolean(m_data, Index++);
+    public float ReadFloat() => BitConverter.ToSingle(m_data, (Index += 4) - 4);
+    public double ReadDouble() => BitConverter.ToDouble(m_data, (Index += 8) - 8);
     public string ReadString()
     {
         int size = ReadInt();
-        return Encoding.UTF8.GetString(m_data, Index += size, size);
+        return Encoding.UTF8.GetString(m_data, (Index += size) - size, size);
     }
 
     public int Size => m_data.Length;
