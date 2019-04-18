@@ -11,4 +11,6 @@ public struct PlayerControls
     public bool Left;
     public bool Right;
     public bool Shoot;
+
+    public GameState State;
 }

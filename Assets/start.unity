@@ -805,6 +805,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1225219188}
     m_Modifications:
+    - target: {fileID: 114440811163337036, guid: a4fc079a916fe6c44879d586be259252,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224782373321836410, guid: a4fc079a916fe6c44879d586be259252,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -894,6 +899,31 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114440811163337036, guid: a4fc079a916fe6c44879d586be259252,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114440811163337036, guid: a4fc079a916fe6c44879d586be259252,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114440811163337036, guid: a4fc079a916fe6c44879d586be259252,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1240447662}
+    - target: {fileID: 114440811163337036, guid: a4fc079a916fe6c44879d586be259252,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 114440811163337036, guid: a4fc079a916fe6c44879d586be259252,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4fc079a916fe6c44879d586be259252, type: 2}
@@ -1216,7 +1246,7 @@ GameObject:
   - component: {fileID: 415841548}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1253,6 +1283,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  connectionType: 1
+  port: 8888
 --- !u!4 &415841549
 Transform:
   m_ObjectHideFlags: 0
@@ -2767,7 +2799,7 @@ Prefab:
     - target: {fileID: 114285992388129886, guid: d327641c2e79608439d8ec00d6282af0,
         type: 2}
       propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224596065365211974, guid: d327641c2e79608439d8ec00d6282af0,
         type: 2}
@@ -2863,7 +2895,7 @@ Prefab:
         type: 2}
       propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 491070443}
     - target: {fileID: 114285992388129886, guid: d327641c2e79608439d8ec00d6282af0,
         type: 2}
       propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -2903,6 +2935,16 @@ Prefab:
         type: 2}
       propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 114285992388129886, guid: d327641c2e79608439d8ec00d6282af0,
+        type: 2}
+      propertyPath: onColorChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114737327297309570, guid: d327641c2e79608439d8ec00d6282af0,
+        type: 2}
+      propertyPath: playerIndex
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d327641c2e79608439d8ec00d6282af0, type: 2}
@@ -3114,6 +3156,7 @@ MonoBehaviour:
   localPlayerControllers:
   - Input: {fileID: 2087527907}
     Controls:
+      Frame: 0
       Up: 0
       Down: 0
       Left: 0

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61058214843154136}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,7 +80,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   player: {fileID: 0}
-  image: {fileID: 11400000, guid: 6f2541ead8cdf674e95fcc8a9c220beb, type: 3}
 --- !u!212 &212194495866760032
 SpriteRenderer:
   m_ObjectHideFlags: 1

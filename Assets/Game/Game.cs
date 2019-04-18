@@ -11,8 +11,11 @@ public class Game : MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject backgroundPrefab;
     public Vector2 size;
+    public GameState state;
 
     public UnityEvent onGameStart;
+    public ConnectionType connectionType = ConnectionType.Udp;
+    public short port = 8888;
 
 	// Use this for initialization
 	void Start ()
@@ -23,8 +26,34 @@ public class Game : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
+        state = GameState.ComputeGameState();
 	}
+
+    private void LateUpdate()
+    {
+        GameState frameState = null;
+        int frameStateId = 0;
+        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            var state = player.GetComponent<PlayerAI>().controller.GetControls().State;
+            if (state == null)
+                return;
+            if (frameState == null)
+            {
+                frameState = state;
+                frameStateId = frameState.ComputeHash();
+            }
+            else
+            {
+                if (state.ComputeHash() != frameStateId)
+                {
+                    throw new System.Exception($@"Different states:
+{frameState}
+{state}");
+                }
+            }
+        }
+    }
 
     public void StartGame(IEnumerable<PlayerInfo> players)
     {

@@ -26,6 +26,20 @@ public class RemotePanel : MonoBehaviour
 
     private void Update()
     {
-        // TODO
+        if (Connection == null)
+            return;
+        Packet packet;
+        while (Connection.TryRead(out packet))
+        {
+            switch ((MessageType)packet.ReadInt())
+            {
+                case MessageType.SetColor:
+                    SetColor(new Color(packet.ReadFloat(), packet.ReadFloat(), packet.ReadFloat()));
+                    break;
+                case MessageType.StartGame:
+                    Lobby.LaunchGame();
+                    return;
+            }
+        }
     }
 }

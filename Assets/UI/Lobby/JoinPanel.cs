@@ -9,8 +9,11 @@ public class JoinPanel : MonoBehaviour {
 
 	public void Connect()
     {
-        IConnection connection = null;
-        // TODO
+        var game = GameObject.FindGameObjectWithTag("GameController").GetComponent<Game>();
+        IConnection connection =
+            ConnectionFactory.Connect(ip,
+            game.port,
+            game.connectionType);
         lobby.Connection = connection;
         menus.SetActivePanel(lobby.gameObject);
     }

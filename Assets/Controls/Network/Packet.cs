@@ -64,6 +64,7 @@ public class PacketBuilder
     public PacketBuilder Write(char _val) => WriteInternal(BitConverter.GetBytes(_val));
     public PacketBuilder Write(float _val) => WriteInternal(BitConverter.GetBytes(_val));
     public PacketBuilder Write(double _val) => WriteInternal(BitConverter.GetBytes(_val));
+    public PacketBuilder Write(bool _val) => WriteInternal(BitConverter.GetBytes(_val));
     private PacketBuilder WriteInternal(byte[] data)
     {
         Data.AddRange(data);

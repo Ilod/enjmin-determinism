@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HostLobby : BaseLobby
@@ -15,18 +16,38 @@ public class HostLobby : BaseLobby
 	
 	void Update()
     {
-		// TODO
+        IConnection connection = null;
+        if (Server.TryListen(out connection))
+        {
+            OnPlayerJoined(connection);
+        }
 	}
 
     private IServer CreateServerConnection()
     {
-        // TODO
-        return null;
+        return ConnectionFactory.CreateServer(Game.port, Game.connectionType);
     }
     
     private void OnPlayerJoined(IConnection connection)
     {
-        // TODO
+        var panel = GetComponentsInChildren<RemotePanel>().First(p => p.Connection == null);
+        panel.SetConnection(connection);
+        panel.SetColor(Color.red);
+        Color color = GetComponentInChildren<HostPanel>().GetComponentInChildren<ColorWheelControl>().Selection;
+        connection.Send(new PacketBuilder().Write((int)MessageType.SetColor).Write(color.r).Write(color.g).Write(color.b).Build());
+    }
+
+    public void SetColor(Color color)
+    {
+        var panelsRoot = gameObject.transform.parent.gameObject;
+
+        foreach (var remotePanel in panelsRoot.GetComponentsInChildren<RemotePanel>())
+        {
+            if (remotePanel.Connection != null)
+            {
+                remotePanel.Connection.Send(new PacketBuilder().Write((int)MessageType.SetColor).Write(color.r).Write(color.g).Write(color.b).Build());
+            }
+        }
     }
 
 
@@ -36,10 +57,8 @@ public class HostLobby : BaseLobby
         var panelsRoot = gameObject.transform.parent.gameObject;
 
         var hostPanel = panelsRoot.GetComponentInChildren<HostPanel>();
-        players.Add(new PlayerInfo(inputAdapter: new MasterPlayerController(controllers.localPlayerControllers[0]),
-            color: hostPanel.GetComponentInChildren<ColorWheelControl>().Selection,
-            index: hostPanel.GetComponent<PlayerPanelInfo>().playerIndex));
 
+        var connections = new List<IConnection>();
         foreach (var remotePanel in panelsRoot.GetComponentsInChildren<RemotePanel>())
         {
             if (remotePanel.Connection != null)
@@ -47,8 +66,20 @@ public class HostLobby : BaseLobby
                 players.Add(new PlayerInfo(inputAdapter: new RemotePlayerController(remotePanel.Connection)
                     , color: remotePanel.Color
                     , index: remotePanel.GetComponent<PlayerPanelInfo>().playerIndex));
+
+                // Game will start
+                remotePanel.Connection.Send(new PacketBuilder()
+                    .Write((int)MessageType.StartGame)
+                    .Build());
+                
+                connections.Add(remotePanel.Connection);
             }
         }
+
+        players.Add(new PlayerInfo(inputAdapter: new MasterPlayerController(controllers.localPlayerControllers[0], connections),
+            color: hostPanel.GetComponentInChildren<ColorWheelControl>().Selection,
+            index: hostPanel.GetComponent<PlayerPanelInfo>().playerIndex));
+
         Game.StartGame(players);
     }
 }
